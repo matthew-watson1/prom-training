@@ -16,9 +16,6 @@ services:
 
   node-exporter:
     image: prom/node-exporter:latest
-    extends:
-      file: common.yml
-      service: ddc-pf-common
     ports:
       - "9100:9100"
     network_mode: "host"
