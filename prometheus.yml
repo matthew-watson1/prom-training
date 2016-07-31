@@ -6,7 +6,7 @@ global:
 
 scrape_configs:
 
-- job_name: HostMetrics-Appservers
+- job_name: HostMetrics
   scrape_interval: 15s
   static_configs:
     - targets:
@@ -17,3 +17,18 @@ scrape_configs:
   static_configs:
     - targets:
       - 'cadvisor:8080'
+
+- job_name: 'federate'
+  scrape_interval: 15s
+  honor_labels: true
+  metrics_path: '/federate'
+  scheme: https
+  params:
+    'match[]':
+      - '{job="node"}'
+      - '{__name__=~"^up:"}'
+      - '{__name__=~"^nodeload:"}'
+
+  static_configs:
+    - targets:
+      - 'prometheus.wmflabs.org:443'
