@@ -6,11 +6,29 @@ services:
     restart: "always"
     tty: true
     stdin_open: true
+    command:
+    - -config.file=/etc/prometheus/prometheus.yml
+    - -alertmanager.url=http://alertmanager:9093
+    - -storage.local.path=/prometheus
+    - -web.console.libraries=/etc/prometheus/console_libraries
+    - -web.console.templates=/etc/prometheus/consoles
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./alertrules.conf:/etc/prometheus/alertrules.conf
     image: prom/prometheus:v1.0.1
     ports:
       - 9090:9090
+
+  alertmanager:
+    command:
+      - -config.file=/alertmanager.conf
+    stdin_open: true
+    tty: true
+    image: prom/alertmanager:latest
+    volumes:
+      - ./alertmanager.conf:/alertmanager.conf
+    ports:
+      - 9093:9093/tcp
 
   grafana:
     restart: "always"
