@@ -15,7 +15,7 @@ services:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - ./alertrules.conf:/etc/prometheus/alertrules.conf
-    image: prom/prometheus:v1.0.1
+    image: prom/prometheus:v1.4.0
     ports:
       - 9090:9090
 

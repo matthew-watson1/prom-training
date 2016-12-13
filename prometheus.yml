@@ -7,16 +7,20 @@ global:
 scrape_configs:
 
 - job_name: HostMetrics
-  scrape_interval: 15s
+  scrape_interval: 5s
   static_configs:
     - targets:
       - 'node-exporter:9100'
 
 - job_name: ContainerMetrics
-  scrape_interval: 15s
   static_configs:
     - targets:
       - 'cadvisor:8080'
+
+- job_name: prometheus
+  static_configs:
+    - targets:
+      - 'prometheus:9090'
 
 - job_name: 'federate'
   scrape_interval: 15s
